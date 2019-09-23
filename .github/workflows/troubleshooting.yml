@@ -42,3 +42,11 @@ jobs:
           STEPS_CONTEXT: ${{ toJson(steps) }}
         run: echo "$STEPS_CONTEXT"
 
+      - name: publish to npm
+        run: |
+          npx json -I -f package.json -e 'this.version="PR-$PR--$COMMIT"'
+          cat package.json
+        env:
+          PR: ${{ github.pull_request }}
+          COMMIT: ${{ github.head_ref }}
+
