@@ -4,4 +4,4 @@ My own testing ground for messing around with GitHub Actions. Helpful for testin
 include cutting new releases, or deploying somewhere. Allows me to test those things outside of
 active projects.
 
-butts
+butts 2x
