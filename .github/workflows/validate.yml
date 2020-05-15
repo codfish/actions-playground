@@ -27,9 +27,9 @@ jobs:
       - name: install dependencies
         run: npm ci --no-save
 
-      - run:
-          npm run lint:commit -- --from="origin/${{ github.ref }}" --to="origin/${{github.head_ref
-          }}"
+      - run: |
+          echo "${{github.ref}}"
+          npm run lint:commit -- --from="origin/${{ github.ref }}" --to="origin/${{github.head_ref}}"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 

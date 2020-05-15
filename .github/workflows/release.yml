@@ -17,7 +17,7 @@ jobs:
           node-version: 12.x
 
       - name: docker login
-        run: echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
+        run: echo $DOCKER_PASSWORD | docker login docker.pkg.github.com -u $DOCKER_USERNAME --password-stdin
         env:
           DOCKER_USERNAME: ${{ secrets.GITHUB_REPOSITORY_OWNER }}
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
@@ -34,7 +34,7 @@ jobs:
           CI: true
 
       - name: docker build
-        run: docker build -t codfish/actions-playground:latest .
+        run: docker build -t docker.pkg.github.com/codfish/actions-playground:latest .
 
       - name: Semantic Release
         run: npx semantic-release
@@ -43,31 +43,21 @@ jobs:
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: GPR Publish
+
       - name: docker push latest
-        run: docker push codfish/actions-playground:latest
-
-      - name: build docs
-        run: |
-          npm run build:docs
-          rm ./docs/.gitignore
+        run: $DOCKER_URL/codfish/actions-playground:latest
         env:
-          GPR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: deploy documentation
-        uses: crazy-max/ghaction-github-pages@7bb2b66
-        with:
-          target_branch: gh-pages
-          build_dir: docs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_URL: docker.pkg.github.com
 
       - name: docker push versions
         if: steps.semantic.outputs.new-release-published == 'true'
         run: |
-          docker tag codfish/actions-playground codfish/actions-playground:$VERSION_TAG
-          docker tag codfish/actions-playground codfish/actions-playground:$MAJOR_TAG
-          docker push codfish/actions-playground:$VERSION_TAG
-          docker push codfish/actions-playground:$MAJOR_TAG
+          docker tag $DOCKER_URL/codfish/actions-playground $DOCKER_URL/codfish/actions-playground:$VERSION_TAG
+          docker tag $DOCKER_URL/codfish/actions-playground $DOCKER_URL/codfish/actions-playground:$MAJOR_TAG
+          docker push $DOCKER_URL/codfish/actions-playground:$VERSION_TAG
+          docker push $DOCKER_URL/codfish/actions-playground:$MAJOR_TAG
         env:
           VERSION_TAG: v${{ steps.semantic.outputs.release-version }}
           MAJOR_TAG: v${{ steps.semantic.outputs.release-major }}
+          DOCKER_REGISTRY_URL: docker.pkg.github.com
