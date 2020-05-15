@@ -19,8 +19,8 @@ jobs:
       - name: docker login
         run: echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
         env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.GITHUB_REPOSITORY_OWNER }}
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
       - name: validate before release
         run: |
@@ -37,7 +37,7 @@ jobs:
         run: docker build -t codfish/actions-playground:latest .
 
       - name: Semantic Release
-        uses: codfish/semantic-release-action@v1
+        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
