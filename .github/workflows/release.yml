@@ -78,7 +78,7 @@ jobs:
           branches: |
             ['main', 'next', 'next-major', {name: 'beta', prerelease: true}, {name: 'alpha', prerelease: true}]
           additional_packages: |
-            ['@google/semantic-release-replace-plugin', '@semantic-release/git']
+            ['@google/semantic-release-replace-plugin']
           plugins: |
             [
               '@semantic-release/commit-analyzer',
@@ -117,10 +117,9 @@ jobs:
                   ]
                 }
               ],
-              [ '@semantic-release/git', {'assets': ['Dockerfile', 'provisioning/Chart.yml']} ],
               '@semantic-release/release-notes-generator',
               '@semantic-release/npm',
-              '@semantic-release/github'
+              [ '@semantic-release/github', {'assets': ['Dockerfile', 'provisioning/Chart.yml']} ],
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
