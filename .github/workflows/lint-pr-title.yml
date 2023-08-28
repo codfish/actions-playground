@@ -1,0 +1,21 @@
+name: Validate pr title
+
+on:
+  pull_request:
+    types: [edited, opened, reopened]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - run: |
+          echo "${{ github.event.pull_request.title }}" | npx commitlint
