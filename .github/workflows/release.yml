@@ -27,13 +27,6 @@ jobs:
         with:
           node-version: 18.x
 
-      - name: testing
-        run: |
-          git ls-remote
-          git rev-parse --git-dir
-          git config --global --add safe.directory /github/workspace
-          echo $?
-
       - name: semantic release dry run
         uses: codfish/semantic-release-action@18-17
         id: semantic-dry-run
