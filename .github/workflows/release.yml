@@ -58,7 +58,7 @@ jobs:
         run: docker build -t codfish/actions-playground:latest .
 
       - name: semantic-release
-        uses: codfish/semantic-release-action@18-17
+        uses: codfish/semantic-release-action@upgrade
         id: semantic
         with:
           additional-packages: |
