@@ -1,3 +1,5 @@
 testing dry run outputs
 
 release notes test
+
+release notes refactor test
