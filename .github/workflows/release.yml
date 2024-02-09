@@ -28,7 +28,16 @@ jobs:
           node-version: 18.x
 
       - name: semantic release dry run
-        uses: codfish/semantic-release-action@main
+        uses: codfish/semantic-release-action@fix-docker-image
+        id: semantic-dry-run
+        with:
+          dry-run: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: semantic release dry run
+        uses: docker://ghcr.io/codfish/semantic-release-action@REF_NAME
         id: semantic-dry-run
         with:
           dry-run: true
