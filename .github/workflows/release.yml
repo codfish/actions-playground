@@ -28,7 +28,7 @@ jobs:
           node-version: 18.x
 
       - name: semantic release dry run
-        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:e8640e0a620980247fd6e46f2f43f9a42d17181840518ea7fe983eeed65c154e
+        uses: codfish/semantic-release-action@main
         id: semantic-dry-run
         with:
           dry-run: true
