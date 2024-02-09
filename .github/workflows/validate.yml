@@ -47,7 +47,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: semantic release dry run
-        uses: docker://ghcr.io/codfish/semantic-release-action:REF_NAME
+        uses: docker://ghcr.io/codfish/semantic-release-action:fix-docker-image
         with:
           dry-run: true
         env:
