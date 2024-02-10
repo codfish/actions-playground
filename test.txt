@@ -1,7 +1,3 @@
 testing dry run outputs
 
-release notes test
-
-release notes refactor test
-
-test pr changes
+test release with a chore
