@@ -82,7 +82,7 @@ jobs:
         id: semantic
         with:
           additional-packages: |
-            ['@google/semantic-release-replace-plugin', '@semantic-release/git']
+            ['@google/semantic-release-replace-plugin', '@semantic-release/git', 'conventional-changelog-conventionalcommits@7']
           plugins: |
             [
               '@semantic-release/commit-analyzer',
