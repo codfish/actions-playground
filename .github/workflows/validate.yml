@@ -38,6 +38,22 @@ jobs:
             ${{ runner.os }}-node_modules-${{ steps.setup-node.outputs.node-version }}-${{
             hashFiles('**/package-lock.json') }}
 
+      - name: semantic release dry run
+        uses: codfish/semantic-release-action@fix-docker-image
+        with:
+          dry-run: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: semantic release dry run
+        uses: docker://ghcr.io/codfish/semantic-release-action:fix-docker-image
+        with:
+          dry-run: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: install dependencies
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci --prefer-offline --no-audit
