@@ -27,15 +27,6 @@ jobs:
         with:
           node-version: 18.x
 
-      - name: semantic release dry run
-        uses: docker://ghcr.io/codfish/semantic-release-action:fix-docker-image
-        id: semantic-dry-run
-        with:
-          dry-run: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Dump semantic dry run outputs
         if: steps.semantic-dry-run.outputs.new-release-published == 'true'
         run: |
@@ -78,7 +69,7 @@ jobs:
         run: docker build -t codfish/actions-playground:latest .
 
       - name: semantic-release
-        uses: docker://ghcr.io/codfish/semantic-release-action:fix-docker-image
+        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:d396038765af1ceaa77f4ba39130
         id: semantic
         with:
           additional-packages: |

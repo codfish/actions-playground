@@ -39,15 +39,7 @@ jobs:
             hashFiles('**/package-lock.json') }}
 
       - name: semantic release dry run
-        uses: codfish/semantic-release-action@fix-docker-image
-        with:
-          dry-run: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: semantic release dry run
-        uses: docker://ghcr.io/codfish/semantic-release-action:fix-docker-image
+        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:d396038765af1ceaa77f4ba39130
         with:
           dry-run: true
         env:
