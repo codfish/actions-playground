@@ -10,7 +10,7 @@ RUN npm ci
 COPY ./src ./src
 COPY ./public ./public
 
-ENV RELEASE_VERSION=5.2.0
+ENV RELEASE_VERSION=5.3.0
 
 RUN npm run build
 
