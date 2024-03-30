@@ -27,26 +27,6 @@ jobs:
         with:
           node-version: 18.x
 
-      - name: Dump semantic dry run outputs
-        if: steps.semantic-dry-run.outputs.new-release-published == 'true'
-        run: |
-          echo "Outputs:\n"
-          echo "$SEMANTIC_OUTPUTS"
-          echo "\n-----\n\nEnvironment Variables:\n"
-          echo "NEW_RELEASE_PUBLISHED: $NEW_RELEASE_PUBLISHED"
-          echo "RELEASE_VERSION: $RELEASE_VERSION"
-          echo "RELEASE_MAJOR: $RELEASE_MAJOR"
-          echo "RELEASE_MINOR: $RELEASE_MINOR"
-          echo "RELEASE_PATCH: $RELEASE_PATCH"
-          echo "RELEASE_NOTES: $RELEASE_NOTES"
-          echo "RELEASE_TYPE: $RELEASE_TYPE"
-          echo "RELEASE_CHANNEL: $RELEASE_CHANNEL"
-          echo "RELEASE_GIT_HEAD: $RELEASE_GIT_HEAD"
-          echo "RELEASE_GIT_TAG: $RELEASE_GIT_TAG"
-          echo "RELEASE_NAME: $RELEASE_NAME"
-        env:
-          SEMANTIC_OUTPUTS: ${{ toJson(steps.semantic-dry-run.outputs) }}
-
       - shell: bash
         run: |
           echo "DOCKER_TAGS=main-${GITHUB_SHA},main,latest" >> $GITHUB_ENV;
@@ -69,7 +49,8 @@ jobs:
         run: docker build -t codfish/actions-playground:latest .
 
       - name: semantic-release
-        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:d396038765af1ceaa77f4ba39130af6e7a7e264bf17cb675ea1b0524d11adf3e
+#        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:d396038765af1ceaa77f4ba39130af6e7a7e264bf17cb675ea1b0524d11adf3e
+        uses: codfish/semantic-release-action@config-file
         id: semantic
         with:
           additional-packages: |
