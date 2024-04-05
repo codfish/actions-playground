@@ -49,7 +49,7 @@ jobs:
         run: docker build -t codfish/actions-playground:latest .
 
       - name: semantic-release
-        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:9e0bbcc4ca3b3611668dcf911e51432573efb3222587c4ca1cc8a759c1b8283c
+        uses: rdash99/semantic-release-action-smaller@main
         id: semantic
         with:
           additional-packages: |
