@@ -72,20 +72,6 @@ jobs:
                 {
                   'replacements': [
                     {
-                      'files': ['Dockerfile'],
-                      'from': 'RELEASE_VERSION=.*',
-                      'to': 'RELEASE_VERSION=${nextRelease.version}',
-                      'results': [
-                        {
-                          'file': 'Dockerfile',
-                          'hasChanged': true,
-                          'numMatches': 1,
-                          'numReplacements': 1
-                        }
-                      ],
-                      'countMatches': true
-                    },
-                    {
                       'files': ['provisioning/Chart.yml'],
                       'from': 'ersion: .*',
                       'to': 'ersion: ${nextRelease.version}',
@@ -102,7 +88,7 @@ jobs:
                   ]
                 }
               ],
-              [ '@semantic-release/git', {'assets': ['Dockerfile', 'provisioning/Chart.yml']} ],
+              [ '@semantic-release/git', {'assets': ['provisioning/Chart.yml']} ],
               [
                 "@semantic-release/release-notes-generator",
                 {
