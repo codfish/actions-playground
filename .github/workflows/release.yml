@@ -59,7 +59,7 @@ jobs:
       - run: cat Dockerfile
 
       - name: semantic-release
-        uses: rdash99/semantic-release-action-smaller@main
+        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:e97235f7e14add2994d6738df6a31a874c184e77da325688c37570dd8382e989
         id: semantic
         with:
           additional-packages: |
