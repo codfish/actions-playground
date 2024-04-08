@@ -6,4 +6,4 @@ test latest release
 
 feature release 2
 
-update
+breaking update
