@@ -56,6 +56,8 @@ jobs:
           name: text-file-${{ github.ref_name }}
           path: text.txt
 
+      - run: cat Dockerfile
+
       - name: semantic-release
         uses: rdash99/semantic-release-action-smaller@main
         id: semantic
