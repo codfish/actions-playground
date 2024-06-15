@@ -59,7 +59,7 @@ jobs:
       - run: cat Dockerfile
 
       - name: semantic-release
-        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:71048986f7e28f024cbad0ef106a7ef20b9b0d322f3a8aa51d89f1c424e75061
+        uses: docker://ghcr.io/codfish/actions-playground@sha2ghcr.io/codfish/actions-playground@56:71048986f7e28f024cbad0ef106a7ef20b9b0d322f3a8aa51d89f1c424e75061ghcr.io/codfish/actions-playground@
         id: semantic
         with:
           additional-packages: |
@@ -72,7 +72,7 @@ jobs:
                 {
                   'replacements': [
                     {
-                      'files': ['Dockerfile'],
+                      'files': ['Dockerfile'], 
                       'from': 'RELEASE_VERSION=.*',
                       'to': 'RELEASE_VERSION=${nextRelease.version}'
                     },
@@ -143,24 +143,49 @@ jobs:
         run: |
           echo $DOCKER_TAGS;
 
-      - name: push docker images to dockerhub & GCR
-        if: steps.semantic.outputs.new-release-published == 'true'
+      # Step to create a list of tags to push to GCR always including the latest tag and optionally
+      # the new release tag and major release tag.
+      - name: Create tags list
+        id: tags
+        shell: bash
         run: |
-          docker tag codfish/actions-playground ghcr.io/codfish/actions-playground:latest
-          docker tag codfish/actions-playground codfish/actions-playground:$VERSION_TAG
-          docker tag codfish/actions-playground codfish/actions-playground:$MAJOR_TAG
-          docker tag codfish/actions-playground ghcr.io/codfish/actions-playground:$VERSION_TAG
-          docker tag codfish/actions-playground ghcr.io/codfish/actions-playground:$MAJOR_TAG
+          TAGS="codfish/actions-playground:latest,ghcr.io/codfish/actions-playground:latest"
+          if [ "${{ steps.semantic.outputs.new-release-published }}" == "true" ]; then
+            TAGS="${TAGS},codfish/actions-playground:v${{ steps.semantic.outputs.release-version }}"
+            TAGS="${TAGS},codfish/actions-playground:v${{ steps.semantic.outputs.release-major }}"
+            TAGS="${TAGS},ghcr.io/codfish/actions-playground:v${{ steps.semantic.outputs.release-version }}"
+            TAGS="${TAGS},ghcr.io/codfish/actions-playground:v${{ steps.semantic.outputs.release-major }}"
+          fi
+          echo "tags=${TAGS}" >> "$GITHUB_OUTPUT"
 
-          docker push codfish/actions-playground:latest
-          docker push codfish/actions-playground:$VERSION_TAG
-          docker push codfish/actions-playground:$MAJOR_TAG
-          docker push ghcr.io/codfish/actions-playground:latest
-          docker push ghcr.io/codfish/actions-playground:$VERSION_TAG
-          docker push ghcr.io/codfish/actions-playground:$MAJOR_TAG
-        env:
-          VERSION_TAG: v${{ steps.semantic.outputs.release-version }}
-          MAJOR_TAG: v${{ steps.semantic.outputs.release-major }}
+      # Push docker images to GCR
+      # Dockerhub is auto synced with the repo, no need to explicitly deploy
+      - name: Build and push docker images to GCR
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/arm64,linux/amd64
+          push: true
+          tags: ${{ steps.tags.outputs.tags }}
+#      - name: push docker images to dockerhub & GCR
+#        if: steps.semantic.outputs.new-release-published == 'true'
+#        run: |
+#          docker tag codfish/actions-playground ghcr.io/codfish/actions-playground:latest
+#          docker tag codfish/actions-playground codfish/actions-playground:$VERSION_TAG
+#          docker tag codfish/actions-playground codfish/actions-playground:$MAJOR_TAG
+#          docker tag codfish/actions-playground ghcr.io/codfish/actions-playground:$VERSION_TAG
+#          docker tag codfish/actions-playground ghcr.io/codfish/actions-playground:$MAJOR_TAG
+#
+#          docker push codfish/actions-playground:latest
+#          docker push codfish/actions-playground:$VERSION_TAG
+#          docker push codfish/actions-playground:$MAJOR_TAG
+#          docker push ghcr.io/codfish/actions-playground:latest
+#          docker push ghcr.io/codfish/actions-playground:$VERSION_TAG
+#          docker push ghcr.io/codfish/actions-playground:$MAJOR_TAG
+#        env:
+#          VERSION_TAG: v${{ steps.semantic.outputs.release-version }}
+#          MAJOR_TAG: v${{ steps.semantic.outputs.release-major }}
+
 #      - name: build docs
 #        run: |
 #          npm ci --no-save
