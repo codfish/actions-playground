@@ -67,7 +67,7 @@ jobs:
       - run: cat Dockerfile
 
       - name: semantic-release
-        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:71048986f7e28f024cbad0ef106a7ef20b9b0d322f3a8aa51d89f1c424e75061
+        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:4c0955361cf42e5ab9bb05df3a1e2a781c443f9760b63a68957689445051a2fb
         id: semantic
         with:
           additional-packages: |
