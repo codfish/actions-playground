@@ -88,16 +88,11 @@ jobs:
                       'files': ['provisioning/Chart.yml'],
                       'from': 'ersion: .*',
                       'to': 'ersion: ${nextRelease.version}'
-                    },
-                    {
-                      'files': ['doesnt-exist.txt'], 
-                      'from': 'version=.*',
-                      'to': 'RELEASE_VERSION=${nextRelease.version}'
                     }
                   ]
                 }
               ],
-              [ '@semantic-release/git', {'assets': ['Dockerfile', 'provisioning/Chart.yml', 'doesnt-exist.txt']} ],
+              [ '@semantic-release/git', {'assets': ['Dockerfile', 'provisioning/Chart.yml']} ],
               [
                 "@semantic-release/release-notes-generator",
                 {
