@@ -80,7 +80,7 @@ jobs:
                 {
                   'replacements': [
                     {
-                      'files': ['Dockerfile'], 
+                      'files': ['Dockerfile'],
                       'from': 'RELEASE_VERSION=.*',
                       'to': 'RELEASE_VERSION=${nextRelease.version}'
                     },
@@ -88,6 +88,11 @@ jobs:
                       'files': ['provisioning/Chart.yml'],
                       'from': 'ersion: .*',
                       'to': 'ersion: ${nextRelease.version}'
+                    },
+                    {
+                      'files': ['app.config.ts'],
+                      'from': 'version: \'.*\'',
+                      'to': 'version: \'${nextRelease.version}\''
                     }
                   ]
                 }
