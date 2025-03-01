@@ -34,9 +34,13 @@
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
     "cod-scripts": "^12.0.0",
+    "eslint": "^8.56.0",
     "jsdoc": "^3.6.3",
-    "markdownlint-cli": "^0.18.0"
+    "markdownlint-cli": "^0.18.0",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "@babel/runtime": "^7.7.4",
