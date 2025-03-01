@@ -91,8 +91,8 @@ jobs:
                     },
                     {
                       'files': ['app.config.ts'],
-                      'from': 'version: \'.*\'',
-                      'to': 'version: \'${nextRelease.version}\''
+                      'from': "version: '.*'",
+                      'to': "version: '${nextRelease.version}'"
                     }
                   ]
                 }
