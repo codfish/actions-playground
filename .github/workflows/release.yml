@@ -91,7 +91,7 @@ jobs:
                     },
                     {
                       'files': ['app.config.ts'],
-                      'from': '(")?version(")?: ([\'"]).*([\'"])',
+                      'from': '(")?version(")?: (['"]).*(['"])',
                       'to': '$1version$2: $3${nextRelease.version.split("-")[0]}$4',
                     }
                   ]
