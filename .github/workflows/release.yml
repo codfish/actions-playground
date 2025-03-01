@@ -92,7 +92,8 @@ jobs:
                     {
                       'files': ['app.config.ts'],
                       'from': "version: '.*'",
-                      'to': "version: '${nextRelease.version}'"
+                      # Remove the -beta.7 part of the version if it exists. Apple doesn't support it.
+                      'to': "version: '${nextRelease.version.split('-')[0]}'"
                     }
                   ]
                 }
