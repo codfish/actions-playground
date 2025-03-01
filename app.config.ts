@@ -28,7 +28,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: `Foo Mobile${getAppNameSuffix()}`,
   slug: 'foomobile',
-  version: '2.0.0',
+  version: '6.4.0-beta.7',
   orientation: 'portrait',
   icon: getAppLogo(),
   scheme: 'foomobile',
