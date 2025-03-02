@@ -24,13 +24,13 @@ const getAppLogo = () => {
   return './src/assets/logos/foo-app-icon-beta.png';
 };
 
-// "version": "1.1.0",
+// "version": "6.4.0",
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: `Foo Mobile${getAppNameSuffix()}`,
   slug: 'foomobile',
-  version: '1.1.0',
+  version: '6.4.0',
   orientation: 'portrait',
   icon: getAppLogo(),
   scheme: 'foomobile',
