@@ -19,13 +19,13 @@ jobs:
       cancel-in-progress: false
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version-file: .nvmrc
 
       - shell: bash
         run: |
