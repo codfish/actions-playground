@@ -15,10 +15,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
+      - name: 'Install pnpm'
+        id: pnpm-setup
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Dump pnpm outputs
+        env:
+          PNPM_CONTEXT: ${{ toJson(steps.pnpm-setup.outputs) }}
+        run: |
+          echo "$PNPM_CONTEXT"
+          echo "PNPM_HOME: $PNPM_HOME"
+
+      - uses: actions/setup-node@v5
         id: setup-node
         with:
-          cache: 'npm'
+          cache: 'pnpm'
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
 
@@ -36,19 +49,27 @@ jobs:
           path: node_modules
           key:
             ${{ runner.os }}-node_modules-${{ steps.setup-node.outputs.node-version }}-${{
-            hashFiles('**/package-lock.json') }}
+            hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: install dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: pnpm install
+
+      - name: install additional semantic release dependencies
+        run: pnpm add @google/semantic-release-replace-plugin @semantic-release/git conventional-changelog-conventionalcommits@7
 
       - name: semantic release dry run
-        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:4c0955361cf42e5ab9bb05df3a1e2a781c443f9760b63a68957689445051a2fb
+        uses: codfish/semantic-release-action@pnpm
         with:
           dry-run: true
+          pnpm-dest: ${{ steps.pnpm-setup.outputs.dest }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: install dependencies
         if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci --prefer-offline --no-audit
+        run: pnpm install
 
       - name: Retrieve text file
         uses: actions/download-artifact@v4
@@ -56,39 +77,16 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - run:
-          npm run lint:commit -- --from="origin/${{ github.base_ref }}"
+          pnpm lint:commit -- --from="origin/${{ github.base_ref }}"
           --to="origin/${{github.head_ref }}"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: lint js
-        run: npm run lint
+        run: pnpm lint
 
       - name: lint markdown
-        run: npm run lint:md
+        run: pnpm lint:md
 
       - name: run tests
-        run: npm run test
-
-      - name: publish to npm
-        id: pr-publish
-        run: |
-          version="0.0.0-PR-${PR}--$(echo ${SHA} | cut -c -7)"
-          npm version $version --no-git-tag-version
-          npm publish --access public --tag pr
-          echo "::set-output name=pr_version::$version"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          PR: ${{ github.event.number }}
-          SHA: ${{ github.event.pull_request.head.sha }}
-
-      - uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '🚀  PR version published: `${{ steps.pr-publish.outputs.pr_version }}`'
-            })
+        run: pnpm test

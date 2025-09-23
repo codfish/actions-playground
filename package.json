@@ -25,6 +25,7 @@
   "keywords": [
     "foobar"
   ],
+  "packageManager": "pnpm@10.17.0",
   "author": "",
   "license": "MIT",
   "bugs": {
@@ -52,12 +53,6 @@
     "extends": [
       "./node_modules/cod-scripts/eslint.js"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "cod-scripts pre-commit",
-      "commit-msg": "cod-scripts commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "browserslist": {
     "production": [

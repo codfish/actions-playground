@@ -18,7 +18,7 @@ jobs:
           node-version: 20
 
       - name: install commitlint deps
-        run: npm install @commitlint/{cli,config-angular}
+        run: pnpm add @commitlint/{cli,config-angular}
 
       # todo: loosen restrictions set in @commitlint/config-angular to allow for more flexibility
       - name: create commitlint config without yaml errors
