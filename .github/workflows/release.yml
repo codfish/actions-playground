@@ -80,13 +80,12 @@ jobs:
 
       - run: cat Dockerfile
 
-      - name: install additional semantic release dependencies
-        run: pnpm add @google/semantic-release-replace-plugin @semantic-release/git conventional-changelog-conventionalcommits@7
-
       - name: semantic-release
         uses: codfish/semantic-release-action@pnpm
         id: semantic
         with:
+          additional-packages: |
+            ['@google/semantic-release-replace-plugin', '@semantic-release/git', 'conventional-changelog-conventionalcommits@7']
           plugins: |
             [
               '@semantic-release/commit-analyzer',
