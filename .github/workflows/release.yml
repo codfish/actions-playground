@@ -28,9 +28,18 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v4
+      - name: 'Install pnpm'
+        id: pnpm-setup
+        uses: pnpm/action-setup@v4
         with:
-          node-version-file: .nvmrc
+          run_install: false
+
+      - uses: actions/setup-node@v5
+        id: setup-node
+        with:
+          cache: 'pnpm'
+          node-version-file: '.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
 
       - shell: bash
         run: |
@@ -71,12 +80,13 @@ jobs:
 
       - run: cat Dockerfile
 
+      - name: install additional semantic release dependencies
+        run: pnpm add @google/semantic-release-replace-plugin @semantic-release/git conventional-changelog-conventionalcommits@7
+
       - name: semantic-release
         uses: codfish/semantic-release-action@pnpm
         id: semantic
         with:
-          additional-packages: |
-            ['@google/semantic-release-replace-plugin', '@semantic-release/git', 'conventional-changelog-conventionalcommits@7']
           plugins: |
             [
               '@semantic-release/commit-analyzer',

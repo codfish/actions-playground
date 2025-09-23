@@ -55,11 +55,12 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: pnpm install
 
+      - name: install additional semantic release dependencies
+        run: pnpm add @google/semantic-release-replace-plugin @semantic-release/git conventional-changelog-conventionalcommits@7
+
       - name: semantic release dry run
         uses: codfish/semantic-release-action@pnpm
         with:
-          additional-packages: |
-            ['@google/semantic-release-replace-plugin', '@semantic-release/git', 'conventional-changelog-conventionalcommits@7']
           dry-run: true
           pnpm-dest: ${{ steps.pnpm-setup.outputs.dest }}
         env:
