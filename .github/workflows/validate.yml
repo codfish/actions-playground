@@ -11,9 +11,17 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
+
+      - name: troubleshooting
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          git remote -v
+          git branch -a
+          echo "$GITHUB_CONTEXT"
 
       - name: 'Install pnpm'
         id: pnpm-setup
@@ -28,32 +36,7 @@ jobs:
           echo "$PNPM_CONTEXT"
           echo "PNPM_HOME: $PNPM_HOME"
 
-      - uses: actions/setup-node@v5
-        id: setup-node
-        with:
-          cache: 'pnpm'
-          node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: troubleshooting
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          git remote -v
-          git branch -a
-          echo "$GITHUB_CONTEXT"
-
-      - uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: node_modules
-          key:
-            ${{ runner.os }}-node_modules-${{ steps.setup-node.outputs.node-version }}-${{
-            hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: pnpm install
+      - uses: codfish/actions/setup-node-and-install@v1
 
       - name: semantic release dry run
         uses: docker://ghcr.io/codfish/semantic-release-action@sha256:327a3ce08284f9dd9b83b607e3f668dae90139e68ce90780b0a43a09d577dc3a
@@ -120,12 +103,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run:
-          pnpm lint:commit -- --from="origin/${{ github.base_ref }}"
-          --to="origin/${{github.head_ref }}"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: lint js
         run: pnpm lint
 
@@ -134,3 +111,36 @@ jobs:
 
       - name: run tests
         run: pnpm test
+
+      - uses: codfish/actions/npm-publish-pr@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build package
+        run: pnpm build
+
+      - name: Calculate build size
+        run: |
+          if [ -d "dist" ]; then
+            size=$(du -sh dist | cut -f1)
+          elif [ -d "build" ]; then
+            size=$(du -sh build | cut -f1)
+          elif [ -f "package.json" ]; then
+            size=$(du -sh . --exclude=node_modules | cut -f1)
+          else
+            size="unknown"
+          fi
+          echo "size=$size" >> $GITHUB_OUTPUT
+        id: build
+
+      - uses: codfish/actions/comment@v1
+        with:
+          message: |
+            ## 🚀 **Build Summary**
+
+            **Build**: ✅ completed successfully
+            **Size**: ${{ steps.build.outputs.size }}
+
+            Ready for testing! 🎉
+          tag: 'build-summary'
+          upsert: true

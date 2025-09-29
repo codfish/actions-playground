@@ -19,11 +19,7 @@ jobs:
         with:
           run_install: false
 
-      - uses: actions/setup-node@v5
-        with:
-          cache: 'pnpm'
-          node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
+      - uses: codfish/actions/setup-node-and-install@v1
 
       - name: install commitlint deps
         run: pnpm add @commitlint/{cli,config-angular}
