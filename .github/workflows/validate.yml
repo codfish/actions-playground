@@ -111,6 +111,7 @@ jobs:
       - uses: codfish/actions/npm-publish-pr@fixes
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          npm-token: ${{ secrets.NPM_TOKEN }}
 
       - name: Build package
         run: pnpm build
