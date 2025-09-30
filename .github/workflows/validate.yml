@@ -108,6 +108,9 @@ jobs:
       - name: run tests
         run: pnpm test
 
+      - shell: bash
+        run: git status
+
       - uses: codfish/actions/npm-publish-pr@fixes
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
