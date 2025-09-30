@@ -36,7 +36,7 @@ jobs:
           echo "$PNPM_CONTEXT"
           echo "PNPM_HOME: $PNPM_HOME"
 
-      - uses: codfish/actions/setup-node-and-install@v1
+      - uses: codfish/actions/setup-node-and-install@fixes
 
       - name: semantic release dry run
         uses: docker://ghcr.io/codfish/semantic-release-action@sha256:327a3ce08284f9dd9b83b607e3f668dae90139e68ce90780b0a43a09d577dc3a
@@ -94,10 +94,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: pnpm install
-
       - name: Retrieve text file
         uses: actions/download-artifact@v4
         with:
@@ -112,7 +108,7 @@ jobs:
       - name: run tests
         run: pnpm test
 
-      - uses: codfish/actions/npm-publish-pr@v1
+      - uses: codfish/actions/npm-publish-pr@fixes
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
