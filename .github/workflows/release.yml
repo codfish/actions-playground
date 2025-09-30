@@ -34,12 +34,7 @@ jobs:
         with:
           run_install: false
 
-      - uses: actions/setup-node@v5
-        id: setup-node
-        with:
-          cache: 'pnpm'
-          node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
+      - uses: codfish/actions/setup-node-and-install@v1
 
       - shell: bash
         run: |
@@ -74,7 +69,6 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           name: text-file-${{ github.ref_name }}
           path: text.txt
 
@@ -189,39 +183,3 @@ jobs:
           platforms: linux/arm64,linux/amd64
           push: true
           tags: ${{ steps.tags.outputs.tags }}
-#      - name: push docker images to dockerhub & GCR
-#        if: steps.semantic.outputs.new-release-published == 'true'
-#        run: |
-#          docker tag codfish/actions-playground ghcr.io/codfish/actions-playground:latest
-#          docker tag codfish/actions-playground codfish/actions-playground:$VERSION_TAG
-#          docker tag codfish/actions-playground codfish/actions-playground:$MAJOR_TAG
-#          docker tag codfish/actions-playground ghcr.io/codfish/actions-playground:$VERSION_TAG
-#          docker tag codfish/actions-playground ghcr.io/codfish/actions-playground:$MAJOR_TAG
-#
-#          docker push codfish/actions-playground:latest
-#          docker push codfish/actions-playground:$VERSION_TAG
-#          docker push codfish/actions-playground:$MAJOR_TAG
-#          docker push ghcr.io/codfish/actions-playground:latest
-#          docker push ghcr.io/codfish/actions-playground:$VERSION_TAG
-#          docker push ghcr.io/codfish/actions-playground:$MAJOR_TAG
-#        env:
-#          VERSION_TAG: v${{ steps.semantic.outputs.release-version }}
-#          MAJOR_TAG: v${{ steps.semantic.outputs.release-major }}
-
-#      - name: build docs
-#        run: |
-#          npm ci --no-save
-#          npm run build:docs
-#          rm ./docs/.gitignore
-#        env:
-#          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-# does not work...
-# Error: The deploy step encountered an error: The process '/usr/bin/git' failed with exit code 128 ❌
-# Deployment failed! ❌
-# ::set-output name=deployment-status::failed
-#
-# - name: deploy documentation
-#   uses: jamesives/github-pages-deploy-action@4.1.0
-#   with:
-#     branch: gh-pages
-#     folder: docs
