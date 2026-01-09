@@ -128,7 +128,6 @@ jobs:
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Dump semantic outputs
         if: steps.semantic.outputs.new-release-published == 'true'
