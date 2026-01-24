@@ -11,7 +11,7 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -36,7 +36,7 @@ jobs:
           echo "$PNPM_CONTEXT"
           echo "PNPM_HOME: $PNPM_HOME"
 
-      - uses: codfish/actions/setup-node-and-install@fixes
+      - uses: codfish/actions/setup-node-and-install@main
 
       - name: semantic release dry run
         uses: docker://ghcr.io/codfish/semantic-release-action@sha256:327a3ce08284f9dd9b83b607e3f668dae90139e68ce90780b0a43a09d577dc3a
@@ -108,7 +108,7 @@ jobs:
       - name: run tests
         run: pnpm test
 
-      - uses: codfish/actions/npm-publish-pr@fixes
+      - uses: codfish/actions/npm-publish-pr@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           npm-token: ${{ secrets.NPM_TOKEN }}

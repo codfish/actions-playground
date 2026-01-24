@@ -13,6 +13,8 @@ jobs:
       cancel-in-progress: true
 
     steps:
+      - uses: actions/checkout@v6
+
       - name: 'Install pnpm'
         id: pnpm-setup
         uses: pnpm/action-setup@v4
