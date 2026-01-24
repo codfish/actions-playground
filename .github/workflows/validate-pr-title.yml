@@ -21,7 +21,7 @@ jobs:
         with:
           run_install: false
 
-      - uses: codfish/actions/setup-node-and-install@v1
+      - uses: codfish/actions/setup-node-and-install@v2
 
       - name: install commitlint deps
         run: pnpm add @commitlint/{cli,config-angular}
