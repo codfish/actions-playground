@@ -54,6 +54,16 @@
       "./node_modules/cod-scripts/eslint.js"
     ]
   },
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"],
+    "rules": {
+      "header-max-length": [0, "never"],
+      "subject-case": [0, "never"],
+      "type-case": [0, "never"],
+      "body-max-line-length": [0, "always"],
+      "footer-max-line-length": [0, "always"]
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
