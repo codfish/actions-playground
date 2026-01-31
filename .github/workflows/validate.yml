@@ -130,7 +130,7 @@ jobs:
           echo "size=$size" >> $GITHUB_OUTPUT
         id: build
 
-      - uses: codfish/actions/comment@v1
+      - uses: codfish/actions/comment@v2
         with:
           message: |
             ## 🚀 **Build Summary**
