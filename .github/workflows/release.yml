@@ -25,7 +25,7 @@ jobs:
       cancel-in-progress: false
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
 
@@ -35,7 +35,7 @@ jobs:
         with:
           run_install: false
 
-      - uses: codfish/actions/setup-node-and-install@v1
+      - uses: codfish/actions/setup-node-and-install@v3
 
       - shell: bash
         run: |
@@ -131,6 +131,7 @@ jobs:
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # needed cause trusted publishing isnt supported by the action yet
 
       - name: Dump semantic outputs
         if: steps.semantic.outputs.new-release-published == 'true'
