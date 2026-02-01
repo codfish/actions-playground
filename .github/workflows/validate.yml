@@ -2,6 +2,11 @@ name: Validate Code
 
 on: pull_request
 
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -12,8 +17,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
 
       - name: troubleshooting
         env:
@@ -23,20 +26,15 @@ jobs:
           git branch -a
           echo "$GITHUB_CONTEXT"
 
-      - name: 'Install pnpm'
-        id: pnpm-setup
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
+      - uses: codfish/actions/setup-node-and-install@v3
+        id: node-setup
 
       - name: Dump pnpm outputs
         env:
-          PNPM_CONTEXT: ${{ toJson(steps.pnpm-setup.outputs) }}
+          NODE_CONTEXT: ${{ toJson(steps.node-setup.outputs) }}
         run: |
-          echo "$PNPM_CONTEXT"
+          echo "$NODE_CONTEXT"
           echo "PNPM_HOME: $PNPM_HOME"
-
-      - uses: codfish/actions/setup-node-and-install@main
 
       - name: semantic release dry run
         uses: docker://ghcr.io/codfish/semantic-release-action@sha256:327a3ce08284f9dd9b83b607e3f668dae90139e68ce90780b0a43a09d577dc3a
@@ -89,7 +87,6 @@ jobs:
               '@semantic-release/npm',
               '@semantic-release/github'
             ]
-          pnpm-dest: ${{ steps.pnpm-setup.outputs.dest }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -108,13 +105,14 @@ jobs:
       - name: run tests
         run: pnpm test
 
-      - uses: codfish/actions/npm-publish-pr@main
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          npm-token: ${{ secrets.NPM_TOKEN }}
-
       - name: Build package
         run: pnpm build
+
+      - uses: codfish/actions/npm-publish-pr@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # needed cause trusted publishing is only available to a single workflow and we need it in release.yml
+          npm-token: ${{ secrets.NPM_TOKEN }}
 
       - name: Calculate build size
         run: |
@@ -130,7 +128,7 @@ jobs:
           echo "size=$size" >> $GITHUB_OUTPUT
         id: build
 
-      - uses: codfish/actions/comment@v1
+      - uses: codfish/actions/comment@v3
         with:
           message: |
             ## 🚀 **Build Summary**
