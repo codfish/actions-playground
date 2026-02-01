@@ -37,7 +37,7 @@ jobs:
           echo "PNPM_HOME: $PNPM_HOME"
 
       - name: semantic release dry run
-        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:327a3ce08284f9dd9b83b607e3f668dae90139e68ce90780b0a43a09d577dc3a
+        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:33086fe34542fd7e01c8efc8f1c57ae5204483d90df9c2c7445dec3db6108050
         with:
           dry-run: true
           additional-packages: |
