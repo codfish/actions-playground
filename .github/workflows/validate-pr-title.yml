@@ -15,12 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: 'Install pnpm'
-        id: pnpm-setup
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-
       - uses: codfish/actions/setup-node-and-install@v3
 
       - name: install commitlint deps
