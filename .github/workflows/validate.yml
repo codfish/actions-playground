@@ -17,6 +17,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: troubleshooting
         env:
@@ -29,6 +31,10 @@ jobs:
       - uses: codfish/actions/setup-node-and-install@v3
         id: node-setup
 
+      - run: |
+          pnpm dlx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{
+          github.event.pull_request.head.sha }} --verbose
+
       - name: Dump pnpm outputs
         env:
           NODE_CONTEXT: ${{ toJson(steps.node-setup.outputs) }}
@@ -37,7 +43,7 @@ jobs:
           echo "PNPM_HOME: $PNPM_HOME"
 
       - name: semantic release dry run
-        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:33086fe34542fd7e01c8efc8f1c57ae5204483d90df9c2c7445dec3db6108050
+        uses: docker://ghcr.io/codfish/semantic-release-action@sha256:c6a4e05d93f73f2870887434c1286df7a23a55770be16cb826b6e2432f92e650
         with:
           dry-run: true
           additional-packages: |
@@ -137,5 +143,5 @@ jobs:
             **Size**: ${{ steps.build.outputs.size }}
 
             Ready for testing! 🎉
-          tag: 'build-summary'
+          tag: build-summary
           upsert: true
