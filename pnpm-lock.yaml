@@ -28,8 +28,8 @@ importers:
         version: 5.1.0
     devDependencies:
       '@codfish/eslint-config':
-        specifier: 0.0.0-PR-132--1df6820
-        version: 0.0.0-PR-132--1df6820(@types/eslint@9.6.1)(@types/node@25.2.0)(@typescript-eslint/eslint-plugin@8.54.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.2))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.2))(eslint@9.39.2(jiti@2.6.1))(jest@29.7.0(@types/node@25.2.0)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@types/node@25.2.0)(typescript@5.9.2)))(jiti@2.6.1)(prettier@2.7.1)(typescript@5.9.2)
+        specifier: 12.3.0
+        version: 12.3.0(@types/eslint@9.6.1)(@types/node@25.2.0)(@typescript-eslint/eslint-plugin@8.54.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.2))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.2))(eslint@9.39.2(jiti@2.6.1))(jest@29.7.0(@types/node@25.2.0)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@types/node@25.2.0)(typescript@5.9.2)))(jiti@2.6.1)(prettier@2.7.1)(typescript@5.9.2)
       '@types/node':
         specifier: ^25.2.0
         version: 25.2.0
@@ -251,8 +251,8 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@codfish/eslint-config@0.0.0-PR-132--1df6820':
-    resolution: {integrity: sha512-sO2+/gVIlb3ZvHNSAkREsKqb8sTecQYDkcGC4tmSWRclKEYWmjpBso662Mmc6KDcGyBm8RGHHmtBTfXi1VRtLQ==}
+  '@codfish/eslint-config@12.3.0':
+    resolution: {integrity: sha512-IHE6IJw9dFkNT6D71685EE9QZKvkIQ7NvpFzHP17TRiFGY4QL0jZzuDxfIym4+AYty9Ts+bSCgKhK7FW6BcWWA==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       eslint: '>= 9'
@@ -1799,7 +1799,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   global-directory@4.0.1:
     resolution: {integrity: sha512-wHTUcDUoZ1H5/0iVqEudYW4/kAlN5cZ3j/bXn0Dpbizl9iaUVeWSHqiOjsgk6OW2bkLclbBjzewBz6weQ1zA2Q==}
@@ -3454,7 +3454,7 @@ snapshots:
   '@bcoe/v8-coverage@0.2.3':
     optional: true
 
-  '@codfish/eslint-config@0.0.0-PR-132--1df6820(@types/eslint@9.6.1)(@types/node@25.2.0)(@typescript-eslint/eslint-plugin@8.54.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.2))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.2))(eslint@9.39.2(jiti@2.6.1))(jest@29.7.0(@types/node@25.2.0)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@types/node@25.2.0)(typescript@5.9.2)))(jiti@2.6.1)(prettier@2.7.1)(typescript@5.9.2)':
+  '@codfish/eslint-config@12.3.0(@types/eslint@9.6.1)(@types/node@25.2.0)(@typescript-eslint/eslint-plugin@8.54.0(@typescript-eslint/parser@8.54.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.2))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.2))(eslint@9.39.2(jiti@2.6.1))(jest@29.7.0(@types/node@25.2.0)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@types/node@25.2.0)(typescript@5.9.2)))(jiti@2.6.1)(prettier@2.7.1)(typescript@5.9.2)':
     dependencies:
       '@commitlint/cli': 20.4.0(@types/node@25.2.0)(typescript@5.9.2)
       '@commitlint/config-conventional': 20.4.0
