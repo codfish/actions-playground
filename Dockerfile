@@ -12,7 +12,7 @@ RUN pnpm install
 COPY ./src ./src
 COPY ./public ./public
 
-ENV RELEASE_VERSION=6.11.0
+ENV RELEASE_VERSION=6.11.1
 
 RUN pnpm build
 
