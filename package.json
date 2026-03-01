@@ -3,20 +3,17 @@
   "version": "0.0.0-semantically-release",
   "description": "My own testing ground for messing around with GitHub Actions.",
   "private": false,
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "start": "PUBLIC_URL=/ react-scripts start",
-    "build": "react-scripts build",
-    "build:docs": "jsdoc src -d docs",
-    "eject": "react-scripts eject",
-    "format": "cod-scripts format",
-    "lint": "cod-scripts lint",
-    "lint:md": "markdownlint -i node_modules -i dist .",
-    "lint:commit": "cod-scripts commitlint",
-    "test": "echo \"No tests yet.\"",
-    "validate": "cod-scripts validate"
+    "dev": "vite",
+    "build": "vite build",
+    "format": "eslint --fix",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests yet.\""
   },
   "repository": {
     "type": "git",
@@ -33,36 +30,28 @@
   },
   "homepage": "https://github.com/codfish/actions-playground#readme",
   "devDependencies": {
-    "@commitlint/cli": "^20.0.0",
-    "@commitlint/config-conventional": "^20.0.0",
-    "cod-scripts": "^12.0.0",
-    "jsdoc": "^4.0.0",
-    "markdownlint-cli": "^0.47.0"
+    "@codfish/eslint-config": "13.1.1",
+    "@types/node": "^25.3.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
+    "baseline-browser-mapping": "^2.10.0",
+    "eslint": "10",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.4",
-    "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^16.0.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.4.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-scripts": "^5.0.1",
-    "web-vitals": "^5.0.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "./node_modules/cod-scripts/eslint.js"
-    ]
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "web-vitals": "^5.1.0"
   },
   "commitlint": {
-    "extends": ["@commitlint/config-conventional"],
-    "rules": {
-      "header-max-length": [0, "never"],
-      "subject-case": [0, "never"],
-      "type-case": [0, "never"],
-      "body-max-line-length": [0, "always"],
-      "footer-max-line-length": [0, "always"]
-    }
+    "extends": [
+      "./node_modules/@codfish/eslint-config/commitlint.js"
+    ]
   },
   "browserslist": {
     "production": [
@@ -78,6 +67,6 @@
   },
   "volta": {
     "node": "24.14.0",
-    "yarn": "4.12.0"
+    "pnpm": "10.28.2"
   }
 }

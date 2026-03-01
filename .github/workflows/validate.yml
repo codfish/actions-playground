@@ -17,6 +17,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: troubleshooting
         env:
@@ -28,6 +30,10 @@ jobs:
 
       - uses: codfish/actions/setup-node-and-install@v3
         id: node-setup
+
+      - run: |
+          pnpm dlx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{
+          github.event.pull_request.head.sha }} --verbose
 
       - name: Dump pnpm outputs
         env:
@@ -137,5 +143,5 @@ jobs:
             **Size**: ${{ steps.build.outputs.size }}
 
             Ready for testing! 🎉
-          tag: 'build-summary'
+          tag: build-summary
           upsert: true
