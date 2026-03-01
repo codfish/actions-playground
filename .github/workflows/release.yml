@@ -68,7 +68,7 @@ jobs:
 
       - name: Upload Text file
         if: github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: text-file-${{ github.ref_name }}
           path: text.txt
