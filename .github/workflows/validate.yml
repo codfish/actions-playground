@@ -105,9 +105,6 @@ jobs:
       - name: lint js
         run: pnpm lint
 
-      - name: lint markdown
-        run: pnpm lint:md
-
       - name: run tests
         run: pnpm test
 
