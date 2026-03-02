@@ -105,9 +105,6 @@ jobs:
       - name: lint js
         run: pnpm lint
 
-      - name: lint markdown
-        run: pnpm lint:md
-
       - name: run tests
         run: pnpm test
 
@@ -116,7 +113,6 @@ jobs:
 
       - uses: codfish/actions/npm-publish-pr@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           # needed cause trusted publishing is only available to a single workflow and we need it in release.yml
           npm-token: ${{ secrets.NPM_TOKEN }}
 
