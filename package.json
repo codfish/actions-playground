@@ -12,7 +12,7 @@
     "build": "vite build",
     "format": "eslint --fix",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc -b",
     "test": "echo \"No tests yet.\""
   },
   "repository": {
