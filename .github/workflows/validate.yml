@@ -17,6 +17,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: troubleshooting
         env:
@@ -28,6 +30,10 @@ jobs:
 
       - uses: codfish/actions/setup-node-and-install@v3
         id: node-setup
+
+      - run: |
+          pnpm dlx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{
+          github.event.pull_request.head.sha }} --verbose
 
       - name: Dump pnpm outputs
         env:
@@ -99,18 +105,17 @@ jobs:
       - name: lint js
         run: pnpm lint
 
-      - name: lint markdown
-        run: pnpm lint:md
-
       - name: run tests
         run: pnpm test
+
+      - name: typecheck
+        run: pnpm typecheck
 
       - name: Build package
         run: pnpm build
 
       - uses: codfish/actions/npm-publish-pr@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           # needed cause trusted publishing is only available to a single workflow and we need it in release.yml
           npm-token: ${{ secrets.NPM_TOKEN }}
 
@@ -137,5 +142,5 @@ jobs:
             **Size**: ${{ steps.build.outputs.size }}
 
             Ready for testing! 🎉
-          tag: 'build-summary'
+          tag: build-summary
           upsert: true
