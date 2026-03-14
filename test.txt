@@ -1,5 +1,3 @@
 testing dry run outputs
 
 test release with a chore
-
-test latest release
