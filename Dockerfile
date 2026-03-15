@@ -13,7 +13,7 @@ COPY ./src ./src
 COPY ./public ./public
 COPY ./index.html ./
 
-ENV RELEASE_VERSION=6.11.1
+ENV RELEASE_VERSION=6.12.0
 
 RUN pnpm build
 
