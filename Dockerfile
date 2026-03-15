@@ -11,6 +11,7 @@ RUN pnpm install
 
 COPY ./src ./src
 COPY ./public ./public
+COPY ./index.html ./
 
 ENV RELEASE_VERSION=6.11.1
 
