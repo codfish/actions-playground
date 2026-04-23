@@ -22,7 +22,7 @@
   "keywords": [
     "foobar"
   ],
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@10.33.2",
   "author": "",
   "license": "MIT",
   "bugs": {
@@ -67,6 +67,6 @@
   },
   "volta": {
     "node": "24.14.1",
-    "pnpm": "10.33.0"
+    "pnpm": "10.33.2"
   }
 }
