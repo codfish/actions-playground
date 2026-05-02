@@ -28,7 +28,7 @@ jobs:
           git branch -a
           echo "$GITHUB_CONTEXT"
 
-      - uses: codfish/actions/setup-node-and-install@v3
+      - uses: codfish/actions/setup-node-and-install@v4
         id: node-setup
 
       - run: |
@@ -114,7 +114,7 @@ jobs:
       - name: Build package
         run: pnpm build
 
-      - uses: codfish/actions/npm-publish-pr@v3
+      - uses: codfish/actions/npm-publish-pr@v4
         with:
           # needed cause trusted publishing is only available to a single workflow and we need it in release.yml
           npm-token: ${{ secrets.NPM_TOKEN }}
@@ -133,7 +133,7 @@ jobs:
           echo "size=$size" >> $GITHUB_OUTPUT
         id: build
 
-      - uses: codfish/actions/comment@v3
+      - uses: codfish/actions/comment@v4
         with:
           message: |
             ## 🚀 **Build Summary**

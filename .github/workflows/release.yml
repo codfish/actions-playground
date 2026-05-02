@@ -29,7 +29,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: codfish/actions/setup-node-and-install@v3
+      - uses: codfish/actions/setup-node-and-install@v4
 
       - shell: bash
         run: |

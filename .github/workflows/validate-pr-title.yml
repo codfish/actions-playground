@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: codfish/actions/setup-node-and-install@v3
+      - uses: codfish/actions/setup-node-and-install@v4
 
       - name: install commitlint deps
         run: pnpm add @commitlint/{cli,config-angular}
